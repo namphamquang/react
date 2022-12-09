@@ -47,6 +47,15 @@ export const checkStudentExisted = (student, students) => {
 }
 /**
  * 
+ * @param {*} str 
+ * @returns 
+ */
+export const checkNameLength = (str) => {
+  if (str.length > 100) return false;
+  return true;
+}
+/**
+ * 
  * @param {*} student 
  * @returns 
  */
