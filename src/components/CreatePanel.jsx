@@ -52,6 +52,8 @@ const CreatePanel = ({ open, columns, tableData, onClose, onSubmit }) => {
       setLogboxStyle({ backgroundColor: '#ffc0c7', margin: "20px auto", borderRadius: '5px', color: '#282a35', padding: '10px' });
     }
     else {
+      setErrorlogin();
+      setLogboxStyle();
       onSubmit(values);
       const student = {};
       student.msv = values.msv
