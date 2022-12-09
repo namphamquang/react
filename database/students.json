@@ -1,74 +1,81 @@
 {
-    "students": [
-      {
-        "id": "1",
-        "msv": "20000001",
-        "ten": "Trần Đức Anh",
-        "nsinh": "01/01/2002",
-        "que": "Hà Nội"
-      },
-      {
-        "id": "2",
-        "msv": "20000002",
-        "ten": "Lê Quốc Bình",
-        "nsinh": "02/02/2002",
-        "que": "Nam Định"
-      },
-      {
-        "id": "3",
-        "msv": "20000003",
-        "ten": "Phạm Ngọc Cường",
-        "nsinh": "03/03/2002",
-        "que": "Thái Bình"
-      },
-      {
-        "id": "4",
-        "msv": "20020004",
-        "ten": "Nguyễn Hải Dương",
-        "nsinh": "04/04/2002",
-        "que": "Thanh Hóa"
-      },
-      {
-        "id": "5",
-        "msv": "20000005",
-        "ten": "Thái Hán Đình",
-        "nsinh": "05/05/2002",
-        "que": "Hà Nam"
-      },
-      {
-        "id": "6",
-        "msv": "20000006",
-        "ten": "Bùi Duy Hoàng",
-        "nsinh": "06/06/2002",
-        "que": "Hải Dương"
-      },
-      {
-        "id": "7",
-        "msv": "20000007",
-        "ten": "Nguyễn Tuấn Kiệt",
-        "nsinh": "07/07/2002",
-        "que": "Bắc Giang"
-      },
-      {
-        "id": "8",
-        "msv": "20020008",
-        "ten": "Trần Trúc Linh",
-        "nsinh": "08/08/2002",
-        "que": "Nghệ An"
-      },
-      {
-        "id": "9",
-        "msv": "20000009",
-        "ten": "Nguyễn Hồng Ngân",
-        "nsinh": "09/09/2002",
-        "que": "Quảng Ninh"
-      },
-      {
-        "id": "10",
-        "msv": "20000010",
-        "ten": "Lại Hà Phương",
-        "nsinh": "10/10/2002",
-        "que": "Hải Phòng"
-      }
-    ]
-  }
+  "students": [
+    {
+      "id": "1",
+      "msv": "20000001",
+      "ten": "Trần Đức Anh",
+      "nsinh": "01/01/2002",
+      "que": "Hà Nội"
+    },
+    {
+      "id": "2",
+      "msv": "20000002",
+      "ten": "Lê Quốc Bình",
+      "nsinh": "02/02/2002",
+      "que": "Nam Định"
+    },
+    {
+      "id": "3",
+      "msv": "20000003",
+      "ten": "Phạm Ngọc Cường",
+      "nsinh": "03/03/2002",
+      "que": "Thái Bình"
+    },
+    {
+      "id": "4",
+      "msv": "20020004",
+      "ten": "Nguyễn Hải Dương",
+      "nsinh": "04/04/2002",
+      "que": "Thanh Hóa"
+    },
+    {
+      "id": "5",
+      "msv": "20000005",
+      "ten": "Thái Hán Đình",
+      "nsinh": "05/05/2002",
+      "que": "Hà Nam"
+    },
+    {
+      "id": "6",
+      "msv": "20000006",
+      "ten": "Bùi Duy Hoàng",
+      "nsinh": "06/06/2002",
+      "que": "Hải Dương"
+    },
+    {
+      "id": "7",
+      "msv": "20000007",
+      "ten": "Nguyễn Tuấn Kiệt",
+      "nsinh": "07/07/2002",
+      "que": "Bắc Giang"
+    },
+    {
+      "id": "8",
+      "msv": "20020008",
+      "ten": "Trần Trúc Linh",
+      "nsinh": "08/08/2002",
+      "que": "Nghệ An"
+    },
+    {
+      "id": "9",
+      "msv": "20000009",
+      "ten": "Nguyễn Hồng Ngân",
+      "nsinh": "09/09/2002",
+      "que": "Quảng Ninh"
+    },
+    {
+      "id": "10",
+      "msv": "20000010",
+      "ten": "Lại Hà Phương",
+      "nsinh": "10/10/2002",
+      "que": "Hải Phòng"
+    },
+    {
+      "msv": "20020214",
+      "ten": "Nguyen Duc Thanh",
+      "nsinh": "12/02/1994",
+      "que": "bing chilling",
+      "id": "8cySHVg"
+    }
+  ]
+}
