@@ -4,62 +4,97 @@ import CreatePanel from '../components/CreatePanel';
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton,
-  MenuItem,
-  Stack,
-  TextField,
   Tooltip,
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import axios from 'axios';
-//import { fetchData } from './brand';
 
 const Dashboard = () => {
-  const students = [];
+  const [tableData, setTableData] = useState([]);
+  const [createPanelOpen, setCreatePanelOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+  /**
+   * lay du lieu
+   */
   const fetchStudents = async () => {
     let response = await axios.get("http://localhost:8000/students/");
     setTableData(response.data);
   };
 
   useEffect(() => { fetchStudents(); }, [])
-  const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [tableData, setTableData] = useState([]);
-  const [validationErrors, setValidationErrors] = useState({});
-  //console.log("12345");
+  /**
+   * kiem tra loi dau vao
+   */
+  const getError = useCallback(
+    (cell) => {
+      return {
+        error: !!validationErrors[cell.id],
+        helperText: validationErrors[cell.id],
+        onBlur: (event) => {
+          const isValid =
+            cell.column.id === 'nsinh'
+              ? validateDay(event.target.value)
+              : validateRequired(event.target.value);
+          if (!isValid) {
+            setValidationErrors({
+              ...validationErrors,
+              [cell.id]: `Ngày sinh không hợp lệ`,
+            });
+          } else {
+            delete validationErrors[cell.id];
+            setValidationErrors({
+              ...validationErrors,
+            });
+          }
+        },
+      };
+    },
+    [validationErrors],
+  );
+  /**
+   * Tao hang moi
+   * @param {*} values 
+   */
   const handleCreateNewRow = (values) => {
     tableData.push(values);
-    for(let i = 0; i < tableData.length; i++) {
-      tableData[i].id = i +1;
+    for (let i = 0; i < tableData.length; i++) {
+      tableData[i].id = i + 1;
     }
     setTableData([...tableData]);
   };
 
+  /**
+   * Luu du lieu
+   * @param {*} param0 
+   */
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       tableData[row.index] = values;
-      //send/receive api updates here, then refetch or update local table data for re-render
-      //axios.put("http://localhost:8000/students/", JSON.stringify(values));
+      const student = {};
+      student.msv = values.msv;
+      student.ten = values.ten;
+      student.nsinh = values.nsinh;
+      student.que = values.que;
+      axios.put(`http://localhost:8000/students/${row.index + 1}`, student);
       setTableData([...tableData]);
-      exitEditingMode(); //required to exit editing mode and close modal
+      exitEditingMode();
     }
   };
 
+  /**
+   * 
+   */
   const handleCancelRowEdits = () => {
     setValidationErrors({});
   };
 
+  /**
+   * Xoa du lieu
+   */
   const handleDeleteRow = useCallback(
     (row) => {
-      /*if (
-        !confirm(`Are you sure you want to delete ${row.getValue('ten')}`)
-      ) {
-        return;
-      }*/
-      //send api delete request here, then refetch or update local table data for re-render
+      axios.patch(`http://localhost:8000/students/${row.index + 1}`);
       tableData.splice(row.index, 1);
       for (let i = 0; i < tableData.length; i++) {
         tableData[i].id = i + 1;
@@ -70,7 +105,9 @@ const Dashboard = () => {
   );
 
 
-
+  /**
+   * Cac cot cua bang
+   */
   const columns = useMemo(
     () => [
       {
@@ -81,6 +118,47 @@ const Dashboard = () => {
         enableSorting: false,
         size: 80,
       },
+      {
+        accessorKey: 'msv',
+        header: 'MSSV',
+        enableEditing: false,
+        size: 140,
+        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+          ...getError(cell),
+        }),
+      },
+      {
+        accessorKey: 'ten',
+        header: 'Họ và Tên',
+        size: 140,
+        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+          ...getError(cell),
+        }),
+      },
+      {
+        accessorKey: 'nsinh',
+        header: 'Ngày sinh',
+        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+          ...getError(cell),
+        }),
+      },
+      {
+        accessorKey: 'que',
+        header: 'Quê quán',
+        size: 80,
+        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+          ...getError(cell),
+        }),
+      },
+
+    ],
+    [getError],
+  );
+  /**
+   * Cac cot Panel tao sinh vien
+   */
+  const columnsPanel = useMemo(
+    () => [
       {
         accessorKey: 'msv',
         header: 'MSSV',
@@ -102,7 +180,8 @@ const Dashboard = () => {
         size: 80
       },
 
-    ]
+    ],
+    [getError],
   );
 
   return (
@@ -123,6 +202,7 @@ const Dashboard = () => {
         enableEditing
         onEditingRowSave={handleSaveRowEdits}
         onEditingRowCancel={handleCancelRowEdits}
+        positionActionsColumn="last"
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
@@ -140,7 +220,7 @@ const Dashboard = () => {
         renderTopToolbarCustomActions={() => (
           <Button
             color="secondary"
-            onClick={() => setCreateModalOpen(true)}
+            onClick={() => setCreatePanelOpen(true)}
             variant="contained"
           >
             Thêm mới
@@ -148,16 +228,28 @@ const Dashboard = () => {
         )}
       />
       <CreatePanel
-        columns={columns}
-        open={createModalOpen}
-        tableData = {tableData}
-        onClose={() => setCreateModalOpen(false)}
+        columns={columnsPanel}
+        open={createPanelOpen}
+        tableData={tableData}
+        onClose={() => setCreatePanelOpen(false)}
         onSubmit={handleCreateNewRow}
       />
     </>
   );
 };
 
-//example of creating a mui dialog modal for creating new rows
+/**
+ * Check input hop le
+ * @param {*} value 
+ * @returns 
+ */
+const validateRequired = (value) => !!value.length;
+const validateDay = (nsinh) =>
+  !!nsinh.length &&
+  nsinh
+    .toLowerCase()
+    .match(
+      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+    );
 
 export default Dashboard;
