@@ -13,7 +13,7 @@ export const checkEmpty = (str) => {
  * @param {*} msv 
  * @returns 
  */
-export const checkIdLength = (msv) => {
+export const checkId = (msv) => {
   if (msv.length < 8 || msv.length > 8 || !(msv.match(/^\d+$/))) return false;
   return true;
 }
@@ -62,12 +62,10 @@ export const checkNameLength = (str) => {
 export const checkBirthday = (student) => {
   var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
   if (student.nsinh.match(dateformat)) {
-    //Test which seperator is used '/' or '-'
     var opera1 = student.nsinh.split('/');
     var opera2 = student.nsinh.split('-');
     var lopera1 = opera1.length;
     var lopera2 = opera2.length;
-    // Extract the string into month, date and year
     if (lopera1 > 1) {
       var pdate = student.nsinh.split('/');
     }
@@ -77,7 +75,6 @@ export const checkBirthday = (student) => {
     var dd = parseInt(pdate[0]);
     var mm = parseInt(pdate[1]);
     var yy = parseInt(pdate[2]);
-    // Create list of days of a month [assume there is no leap year by default]
     var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if (mm == 1 || mm > 2) {
       if (dd > ListofDays[mm - 1]) {
